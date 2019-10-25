@@ -33,10 +33,18 @@
         req({
           url: url,
           method: 'GET',
+          contentType: 'application/json;charset=utf-8'
           success: function(result, status, xhr) {
-            
+            iqiyiParseSearch(result);
           }
         });
+      }
+      
+      function iqiyiParseSearch(result) {
+        if (result == null || result.body == null) {
+          return "暂无检索结果";
+        }
+        $(result.body).find('')
       }
       
       function req(options) {
@@ -48,6 +56,7 @@
           data: {
             'url': options.url,
             'headers[user-agent]': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
+            'headers[Content-Type]': options.contentType,
             'method': options.method,
             'body': options.body ? {} : options.body
           },
