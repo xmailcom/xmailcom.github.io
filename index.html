@@ -52,13 +52,23 @@
           cb({code: 0});
           return ;
         }
-        var link = data['data']['docinfos'][0]['albumDocInfo']['albumLink'];
+        var albumDoc = data['data']['docinfos'][0]['albumDocInfo'];
+        var albumId = albumDoc['albumId'];
+        var itemTotalNumber = albumDoc['itemTotalNumber'];
+        
+        var link = 'https://pub.m.iqiyi.com/h5/main/videoList/album/?albumId='+albumId+'&size='+itemTotalNumber+'&page=1&needPrevue=true&needVipPrevue=false'
+        
         req({
           url: link,
           method: 'GET',
           contentType: 'application/json;charset=utf-8',
           success: function(result, status, xhr) {
-            iqiyiDianshiju(result, cb);
+            var data = JSON.parse(result.body);
+            if (data.code != 'A00000') {
+              cb({code: 0});
+              return ;
+            }
+            cb({code: 1, data: data.data});
           }
         })
       }
