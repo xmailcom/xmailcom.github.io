@@ -42,7 +42,7 @@
               alert('检索失败');
               return ;
             }
-            $('#j-search-result').html(juicer($('#j-iqiyi-result').html(), data.data));
+            $('#j-search-result').html(juicer($('#j-iqiyi-result').html(), {videos: data.data.videos}));
           });
         }
       }
