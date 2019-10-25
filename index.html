@@ -29,7 +29,7 @@
       
       function iqiyiSearch() {
         var keyword = $('#j-keyword').val();
-        var url = 'https://search.video.iqiyi.com/o?if=html5&key=' + encodeURIComponent(keyword);
+        var url = 'https://search.video.iqiyi.com/o?if=html5&key=' + encodeURIComponent(keyword) + "&pageSize=1";
         req({
           url: url,
           method: 'GET',
@@ -44,7 +44,11 @@
         if (result == null || result.body == null) {
           return "暂无检索结果";
         }
-        $(result.body).find('.m-box m-box-top')
+        var data = JSON.parse(result.body);
+        if (data.code != 'A00000') {
+          return "查询失败";
+        }
+        data['data']['docinfos']['']
       }
       
       function req(options) {
