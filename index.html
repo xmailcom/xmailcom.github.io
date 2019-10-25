@@ -38,7 +38,7 @@
         var type = $('#j-type').val();
         if (type === 'iqiyi') {
           iqiyiSearch(function(data) {
-            $(#j-search-result).html(juicer($('#j-iqiyi-result').html(), data));
+            $('#j-search-result').html(juicer($('#j-iqiyi-result').html(), data));
           });
         }
       }
