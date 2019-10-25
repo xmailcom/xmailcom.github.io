@@ -54,7 +54,7 @@
         }
         var link = data['data']['docinfos'][0]['albumDocInfo']['albumLink'];
         req({
-          url: url,
+          url: link,
           method: 'GET',
           contentType: 'application/json;charset=utf-8',
           success: function(result, status, xhr) {
