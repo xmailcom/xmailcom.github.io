@@ -23,11 +23,13 @@
       function search() {
         var type = $('#j-type').val();
         if (type === 'iqiyi') {
-          iqiyiSearch();
+          iqiyiSearch(function(data) {
+            console.log(data)
+          });
         }
       }
       
-      function iqiyiSearch() {
+      function iqiyiSearch(cb) {
         var keyword = $('#j-keyword').val();
         var url = 'https://search.video.iqiyi.com/o?if=html5&key=' + encodeURIComponent(keyword) + "&pageSize=1";
         req({
@@ -35,20 +37,39 @@
           method: 'GET',
           contentType: 'application/json;charset=utf-8',
           success: function(result, status, xhr) {
-            iqiyiParseSearch(result);
+            iqiyiParseSearch(result, cb);
           }
         });
       }
       
-      function iqiyiParseSearch(result) {
+      function iqiyiParseSearch(result, cb) {
         if (result == null || result.body == null) {
-          return "暂无检索结果";
+          cb({code: 0});
+          return ;
         }
         var data = JSON.parse(result.body);
         if (data.code != 'A00000') {
-          return "查询失败";
+          cb({code: 0});
+          return ;
         }
-        data['data']['docinfos']['']
+        var link = data['data']['docinfos'][0]['albumDocInfo']['albumLink'];
+        req({
+          url: url,
+          method: 'GET',
+          contentType: 'application/json;charset=utf-8',
+          success: function(result, status, xhr) {
+            iqiyiDianshiju(result, cb);
+          }
+        })
+      }
+      
+      function iqiyiDianshiju(result, cb) {
+        if (result.body == null) {
+          cb({code: 0});
+          return ;
+        }
+        var list = $(result.body).find('.album-numlist album_item a')['href];
+        cb({code: 1, list: list});
       }
       
       function req(options) {
