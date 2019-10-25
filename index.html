@@ -6,7 +6,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
   </head>
   
-  <body>
+  <body class="container">
     <select id="j-type">
       <option value="iqiyi">iqiyi</option>
     </select>
@@ -46,7 +46,7 @@
           contentType: 'application/x-www-form-urlencoded',
           timeout: 30000,
           data: {
-            'url': optioins.url,
+            'url': options.url,
             'headers[user-agent]': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1',
             'method': options.method,
             'body': options.body ? {} : options.body
